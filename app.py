@@ -6,7 +6,7 @@ from PIL import Image
 from ultralytics import YOLO
 from ensemble_utils import weighted_boxes_fusion, nms, soft_nms, non_maximum_weighted
 
-st.set_page_config(layout="wide", page_title="Ensemble Models Inference")
+st.set_page_config(layout="wide", page_title="Medaka-EL Framework")
 
 st.markdown("""
 <style>
@@ -189,8 +189,8 @@ if uploaded_file is not None:
                 )
             
             if len(ens_boxes) > 0:
-                # Filter by confidence threshold
-                valid_idx = ens_scores >= conf_thr
+                # Filter by confidence threshold (round to 2 decimal places to match display)
+                valid_idx = np.round(ens_scores, 2) >= conf_thr
                 ens_boxes = ens_boxes[valid_idx]
                 ens_scores = ens_scores[valid_idx]
                 ens_labels = ens_labels[valid_idx]
